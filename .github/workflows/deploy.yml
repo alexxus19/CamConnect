@@ -22,8 +22,8 @@ jobs:
           password: ${{ secrets.STRATO_PASSWORD }}
           port: ${{ secrets.STRATO_PORT }}
           script: |
-            mkdir -p /fotos
-            rm -rf /fotos/api /fotos/snaps /fotos/app.js /fotos/index.html /fotos/robots.txt /fotos/styles.css
+            mkdir -p ~/fotos
+            rm -rf ~/fotos/api ~/fotos/snaps ~/fotos/app.js ~/fotos/index.html ~/fotos/robots.txt ~/fotos/styles.css
 
       - name: Upload project files
         uses: appleboy/scp-action@v0.1.7
@@ -33,8 +33,9 @@ jobs:
           password: ${{ secrets.STRATO_PASSWORD }}
           port: ${{ secrets.STRATO_PORT }}
           source: "api,app.js,index.html,robots.txt,styles.css,snaps"
-          target: "/fotos"
+          target: "~/fotos"
           overwrite: true
+          debug: true
 
       - name: Fix permissions
         uses: appleboy/ssh-action@v1.0.3
@@ -44,5 +45,5 @@ jobs:
           password: ${{ secrets.STRATO_PASSWORD }}
           port: ${{ secrets.STRATO_PORT }}
           script: |
-            mkdir -p /fotos/snaps
-            chmod 775 /fotos/snaps || true
+            mkdir -p ~/fotos/snaps
+            chmod 775 ~/fotos/snaps || true
