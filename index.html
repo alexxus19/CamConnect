@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#d9d4ca" />
+    <title>CamCollect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+      <div id="boardWrapper" class="board-wrapper" aria-label="Bildwand" tabindex="0">
+        <div id="board" class="board">
+          <section id="centerStage" class="center-stage" aria-label="Kamera">
+            <div class="stage-head">
+              <div>
+                <p class="eyebrow">CamCollect</p>
+                <h1 class="stage-title">Juhu Fotos!</h1>
+              </div>
+              <div class="head-actions">
+                <button id="uploadBtn" class="btn btn-upload" type="button">Upload</button>
+                <input id="uploadInput" type="file" accept="image/*" multiple hidden />
+              </div>
+            </div>
+            <div class="video-shell">
+              <video id="camera" autoplay playsinline muted></video>
+              <div class="lens-label">Live View</div>
+            </div>
+            <div class="controls" role="group" aria-label="Kamerasteuerung">
+              <button id="captureBtn" class="btn btn-capture" type="button" aria-label="Foto aufnehmen"></button>
+              <div class="control-actions">
+                <button id="flipBtn" class="btn btn-secondary" type="button">Selfie</button>
+                <button id="torchBtn" class="btn btn-secondary" type="button">Blitz Aus</button>
+              </div>
+            </div>
+            <p id="statusText" class="status-text">Kamera wird gestartet...</p>
+          </section>
+        </div>
+      </div>
+
+      <dialog id="lightbox" class="lightbox" aria-label="Bildvorschau">
+        <form method="dialog" class="lightbox-head">
+          <p class="lightbox-title">Snapshot</p>
+          <button id="closeLightboxBtn" class="close-btn" aria-label="Schließen">X</button>
+        </form>
+        <img id="lightboxImage" alt="Vergrösserte Aufnahme" />
+        <a id="downloadBtn" class="download-btn" href="#" download>Download</a>
+      </dialog>
+
+      <button id="recenterBtn" class="recenter-btn" type="button" aria-label="Kamera wieder zentrieren">
+        <span class="cam-glyph" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+name: Deploy to Strato
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare target directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.STRATO_HOST }}
+          username: ${{ secrets.STRATO_USER }}
+          password: ${{ secrets.STRATO_PASSWORD }}
+          port: ${{ secrets.STRATO_PORT }}
+          script: |
+            mkdir -p /fotos
+            rm -rf /fotos/api /fotos/snaps /fotos/app.js /fotos/index.html /fotos/robots.txt /fotos/styles.css
+
+      - name: Upload project files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.STRATO_HOST }}
+          username: ${{ secrets.STRATO_USER }}
+          password: ${{ secrets.STRATO_PASSWORD }}
+          port: ${{ secrets.STRATO_PORT }}
+          source: "api,app.js,index.html,robots.txt,styles.css,snaps"
+          target: "/fotos"
+          overwrite: true
+
+      - name: Fix permissions
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.STRATO_HOST }}
+          username: ${{ secrets.STRATO_USER }}
+          password: ${{ secrets.STRATO_PASSWORD }}
+          port: ${{ secrets.STRATO_PORT }}
+          script: |
+            mkdir -p /fotos/snaps
+            chmod 775 /fotos/snaps || true
